@@ -52,7 +52,7 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 app.use(require('koa-static')('./build'));
-mongoose.connect('mongodb+srv://awesomeag:97390636@cluster0-88ugf.mongodb.net/test?retryWrites=true')
+//mongoose.connect('mongodb+srv://awesomeag:97390636@cluster0-88ugf.mongodb.net/test?retryWrites=true')
 
 
 module.exports = app

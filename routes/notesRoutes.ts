@@ -3,10 +3,11 @@ import Router from 'koa-router';
 
 const router = new Router();
 
-router.get('/get', NoteController.get)
-router.get('/get1', NoteController.get1)
-router.get('/get2', NoteController.get2)
-router.get('/get3', NoteController.get3)
+// router.get('/:id', NoteController.get)
 router.post('/create',  NoteController.create)
+router.get('/all', NoteController.getAll)
+router.delete('/:id', NoteController.deleteNote)
+router.get('/find/title/:id', NoteController.findByTitle)
+router.get('/find/description/:id', NoteController.findByDescription)
 
 module.exports = router.routes();

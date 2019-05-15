@@ -13,7 +13,7 @@ createConnection ({
     database: 'notesdb',
     ssl: false,
     entities: [Note],
-    logging: ['query', 'error'],
+    //logging: ,
     synchronize: true,
 }).then( connection => {
     console.log('Database connection established');
