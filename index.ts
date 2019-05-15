@@ -6,11 +6,11 @@ import Note  from './models/notes';
 
 createConnection ({
     type: 'postgres',
-    host: 'localhost',
+    host: process.env.DB_HOST,
     port: 5432,
-    username: 'server',
-    password: 'password',
-    database: 'notesdb',
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE_NAME,
     ssl: false,
     entities: [Note],
     //logging: ,
