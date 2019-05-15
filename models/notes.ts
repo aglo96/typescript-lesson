@@ -1,11 +1,25 @@
 import { Length, validate } from 'class-validator';
 import InvalidModelError from './invalidModelError';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+} from 'typeorm';
 
 
+//database table is called notes
+@Entity('notes')
 
 export default class Note {
+    
+    @PrimaryGeneratedColumn()
+    id:number;
+
+    @Column('text')
     @Length(1,70)
     title: string
+
+    @Column('text')
     @Length(1,500)
     description: string
 
