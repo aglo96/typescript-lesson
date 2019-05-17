@@ -2,7 +2,8 @@ require('dotenv').config();
 import "reflect-metadata";
 const server = require('./server')
 import { createConnection } from 'typeorm';
-import Note  from './models/notes';
+import Note  from './models/note';
+import User from './models/user';
 
 createConnection ({
     type: 'postgres',
@@ -12,8 +13,8 @@ createConnection ({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE_NAME,
     ssl: false,
-    entities: [Note],
-    //logging: ,
+    entities: [User, Note],
+    logging: [],
     synchronize: true,
 }).then( connection => {
     console.log('Database connection established');

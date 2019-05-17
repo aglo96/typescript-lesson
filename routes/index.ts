@@ -4,4 +4,5 @@ module.exports = (router: Router) => {
   router.prefix('/v1');
 //  router.use('/todos',require('./todos'))
   router.use('/notes', require('./notesRoutes'))
+  router.use('/users', require('./users'))
 } 

@@ -3,3 +3,5 @@ export default class InvalidModelError extends Error {
         super(msg);
     }
 }
+
+

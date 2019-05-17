@@ -21,6 +21,8 @@
    "scripts": {
       "dev": "nodemon index",
       "start": "ts-node src/index.ts",
+      "docker": "docker run -d -p 4000:80 loanguo/testproject",
+      "image": "docker build -t loanguo/testproject .",
       "go": "tsc && nodemon build/index",
       "start-db": "pg_ctl -D /usr/local/var/postgres start",
       "stop-db": "pg_ctl -D /usr/local/var/postgres stop",

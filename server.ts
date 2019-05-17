@@ -7,7 +7,6 @@ const Helmet = require('koa-helmet')
 const respond = require('koa-respond')
 const mongoose = require('mongoose');
 
-
 const app = new Koa()
 const router = new Router()
 
@@ -25,6 +24,8 @@ app.use(async (ctx: any, next: any) => {
     await next()
   }
   catch (err) {
+    console.log('err is caught');
+    console.log(err);
     ctx.status = 400
      ctx.body = {
           "code": 400,
@@ -56,3 +57,4 @@ app.use(require('koa-static')('./build'));
 
 
 module.exports = app
+

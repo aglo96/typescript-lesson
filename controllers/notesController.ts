@@ -1,7 +1,10 @@
-import Note from "../models/notes";
+import Note from "../models/note";
 import * as Koa from "koa"
 import { getManager, Repository } from 'typeorm';
-
+import { Context } from "istanbul-lib-report";
+import User from "../models/user";
+import { validate } from "class-validator";
+import InvalidInputError  from "./invalidInputError";
 
 
 export default class NoteController {
@@ -16,7 +19,6 @@ static async get(ctx: Koa.Context) {
 
 static async getAll(ctx: any) {
     const noteRepository: Repository<Note> = getManager().getRepository(Note);
-    console.log("dsasadsad");
     const notes = await noteRepository.find();
     ctx.status= 200;
     ctx.body = notes;
@@ -24,25 +26,36 @@ static async getAll(ctx: any) {
 
 
 static async create(ctx: any) {
-    // if(!ctx.request.body){
-    //     throw new Error("No Request Body")
-    // }
-
-    // console.log(ctx.request.body);
-
-    // var t = ctx.request.body.title;
-    // var d = ctx.request.body.description;
-
-    // const note = await Note.make(t, d);
-    // ctx.body = note;
     const noteRepository: Repository<Note> = getManager().getRepository(Note);
-    let title = ctx.request.body.title;
-    let description = ctx.request.body.description;
-    const newNote:Note  = await Note.make( title, description );
+    const userRepository: Repository<User> = getManager().getRepository(User);
+    let title: string = ctx.request.body.title;
+    let description: string = ctx.request.body.description;
+    let userId: string = ctx.request.body.userId;
+
+    const validateInput = NoteController.validateRequestParams(title,description,userId);
+    if (!validateInput) {
+        throw new InvalidInputError("invalid input");
+    }
+    const user = await userRepository.findOne({id: userId});
+    if (!user) {
+        throw new Error("user does not exist");     
+    }
+    const newNote:Note  = await Note.make( title, description, user);
     const note = await noteRepository.save(newNote);
     ctx.status= 201;
     ctx.body = note;
 }
+
+static validateRequestParams(title:string, description:string, userId:string): boolean {
+    if (title.length>70 ||
+         title.length<1 || 
+         description.length>500 || 
+         description.length<0 || 
+         userId.length<1)
+        return false; 
+    return true;
+    } 
+
 
 static async deleteNote(ctx: any) {
     const noteRepository: Repository<Note> = getManager().getRepository(Note);
